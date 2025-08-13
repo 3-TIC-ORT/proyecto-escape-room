@@ -1,1 +1,19 @@
-
+h1{
+    font-size: 100px;
+    color:  rgba(0, 0, 255, 0.548);
+}
+button{
+    background-color: rgb(56, 50, 44);
+    color: rgba(194, 213, 230, 0.884);
+    margin: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: x-large;
+    border-radius: 10px;
+}
+button:hover {
+    background-color: black;
+    color: rgba(194, 213, 230, 0.39);;
+}

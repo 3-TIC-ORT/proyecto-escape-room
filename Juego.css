@@ -1,0 +1,18 @@
+body {
+    background-color: white;
+}
+.paredes {
+  height: 640px;
+}
+.pared1{
+    background-color: blue;
+}
+.pared2{
+    background-color: red;
+}
+.pared3{
+    background-color: yellow;
+}
+.pared4{
+    background-color: green;
+}

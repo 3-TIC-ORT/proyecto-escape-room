@@ -5,16 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habitación 1</title>
     <link rel="stylesheet" href="Juego.css">
+    <script src="Juego.js"></script>
 </head>
 <body>
-    <div class="paredes pared1">
-<h1>Juego</h1>
+  <main class="paredes-container">
+    <div class="paredes pared1" id="pared1">
+      <h1>Juego</h1>
+      <dialog open="aaaa">Hola</dialog>
+      <a href="#pared4">boton</a>
+      <a href="#pared2">boton</a>
     </div>
-      <div class="paredes pared2">Pared 2
+      <div class="paredes pared2" id="pared2">Pared 2
         <button>a</button>
+        <a href="#pared1">boton</a>
+        <a href="#pared3">boton</a>
       </div>
-      <div class="paredes pared3">Pared 3</div>
-      <div class="paredes pared4">Pared 4</div>
+      <div class="paredes pared3" id="pared3">Pared 3
+        <dialog>Hola</dialog>
+      <a href="#pared2">boton</a>
+      <a href="#pared4">boton</a>
+      </div>
+      
+      <div class="paredes pared4" id="pared4">Pared 4
+        <a href="#pared3">boton</a>
+        <a href="#pared1">boton</a>
+      </div>
+  </main>
     
     
 

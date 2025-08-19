@@ -1,9 +1,22 @@
 body {
     background-color: white;
 }
+
+.paredes-container{
+    display: flex;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+    overflow: hidden;
+}
+
 .paredes {
   height: 640px;
+  width: 100vw;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
+
+
 .pared1{
     background-color: blue;
 }

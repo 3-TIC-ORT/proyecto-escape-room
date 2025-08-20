@@ -29,3 +29,9 @@ body {
 .pared4{
     background-color: green;
 }
+.botones {
+    transform: translate(25%);
+    position: absolute;
+    margin-top: 200px;
+    
+}

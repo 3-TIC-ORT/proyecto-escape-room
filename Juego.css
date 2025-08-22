@@ -14,12 +14,12 @@ body {
   width: 100vw;
   flex-shrink: 0;
   scroll-snap-align: start;
-  transform: translateX(-100vw); /* Cambiar */
+  /* transform: translateX(-100vw);  Cambiar */
 }
 
 
 .pared1{
-    background-color: blue;
+    background-color: peru;
 }
 .pared2{
     background-color: red;
@@ -36,4 +36,37 @@ body {
 }
 .boton1 {
     margin-left: 80%;
+}
+.pantallas {
+width: 160px;
+height: 160px;
+margin-left: 400px;
+margin-top: 30px;
+}
+.libros {
+    width: 300px;
+    height: 100px;
+    background-color: gold;
+    margin-left: 50px;
+    text-align: center;
+    margin-top: 85px;
+    
+}
+.estante {
+    height: 50px;
+    width: 300px;
+    margin-left: 50px;
+    background-color: maroon;
+    text-align: center;
+    color: blanchedalmond;
+    margin-top: 70px;
+}
+.CambioDePared {
+    color: darkblue;
+}
+.esfinge {
+    width: 200px;
+    height: 7vh;
+    background-color: rebeccapurple;
+    margin-left: 1080px;
 }

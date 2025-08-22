@@ -40,8 +40,11 @@ body {
 .pantallas {
 width: 160px;
 height: 160px;
-margin-left: 400px;
+margin-left: 470px;
 margin-top: 30px;
+background-color: rgb(175, 167, 167);
+border-width: 10px;
+border-color: rgb(90, 84, 84);
 }
 .libros {
     width: 300px;
@@ -69,4 +72,12 @@ margin-top: 30px;
     height: 7vh;
     background-color: rebeccapurple;
     margin-left: 1080px;
+    
+}
+.sarcofago {
+    height: 70vh;
+    width: 20vh;
+    margin-left: 5vh;
+    background-color: royalblue;
+    margin-top: 10vh;
 }

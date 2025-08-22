@@ -4,4 +4,4 @@ function irAPantalla(url) {
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('StartButton');
     btn.addEventListener('click', () => irAPantalla('Juego.html'));
-  });
+  }); 

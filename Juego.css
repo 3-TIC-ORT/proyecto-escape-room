@@ -4,8 +4,8 @@ body {
 
 .paredes-container{
     display: flex;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: auto;
+   /* scroll-snap-type: x mandatory;
+    scroll-behavior: auto; */
     overflow: hidden;
 }
 

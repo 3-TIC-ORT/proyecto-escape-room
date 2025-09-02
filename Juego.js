@@ -1,22 +1,29 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const container = document.getElementById("paredesContainer");
-    const paredes = document.querySelectorAll(".paredes");
-  
-    let indice = 0; // arranca en pared1
-  
-    // Botones
-    const boton1 = document.getElementById("boton1"); // botón "a" para ir a la pared siguiente
-    const boton2 = document.getElementById("boton2"); // botón "a" para ir a la pared anterior
-  
-    // Avanzar a la siguiente pared
-    boton1.addEventListener("click", () => {
-      indice = (indice + 1) % paredes.length; // avanza y vuelve al inicio si pasa del final
-      container.style.transform = `translateX(-${indice * 100}vw)`;
+const container = document.getElementById("Container");
+    const total = container.children.length;
+    let currentIndex = 0;
+
+    function scrollToIndex(index) {
+      const x = index * window.innerWidth;
+      container.scrollTo({ left: x, behavior: "smooth" });
+    }
+
+    function scrollNext() {
+      currentIndex = (currentIndex + 1) % total;                 // 3->0
+      scrollToIndex(currentIndex);
+    }
+
+    function scrollPrev() {
+      currentIndex = (currentIndex - 1 + total) % total;          // 0->3
+      scrollToIndex(currentIndex);
+    }
+
+    // Si el usuario arrastra con el mouse/touch, actualizamos el índice
+    container.addEventListener("scroll", () => {
+      const idx = Math.round(container.scrollLeft / window.innerWidth);
+      currentIndex = Math.max(0, Math.min(total - 1, idx));
     });
-  
-    // Volver a la pared anterior
-    boton2.addEventListener("click", () => {
-      indice = (indice - 1 + paredes.length) % paredes.length; // retrocede y vuelve al final si va antes de 0
-      container.style.transform = `translateX(-${indice * 100}vw)`;
+
+    // Si cambia el tamaño de la ventana, mantenemos el snap correcto
+    window.addEventListener("resize", () => {
+      scrollToIndex(currentIndex);
     });
-  });

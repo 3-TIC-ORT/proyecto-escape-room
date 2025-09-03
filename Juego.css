@@ -32,11 +32,11 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 5rem;
-  /* transform: translateX(-100vw);  Cambiar */
+  /* transform: translateX(-100vw);  */
 }
 
 .nav-btn {
-    position: fixed;
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(0,0,0,0.5);
@@ -83,37 +83,22 @@ border-width: 10px;
 border-color: rgb(90, 84, 84);
 }
 .libros {
-    width: 300px;
-    height: 100px;
     background-color: gold;
     margin-left: 50px;
     text-align: center;
-    margin-top: 85px;
     
 }
 .estante {
-    height: 50px;
-    width: 300px;
-    margin-left: 50px;
     background-color: maroon;
     text-align: center;
     color: blanchedalmond;
-    margin-top: 70px;
-}
-.CambioDePared {
-    color: darkblue;
+    margin-bottom: 40vh;
 }
 .esfinge {
-    width: 200px;
-    height: 7vh;
     background-color: rebeccapurple;
-    margin-left: 1080px;
+    margin-left: 2vh;
     
 }
 .sarcofago {
-    height: 70vh;
-    width: 20vh;
-    margin-left: 5vh;
     background-color: royalblue;
-    margin-top: 10vh;
 }

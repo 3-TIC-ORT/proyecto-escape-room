@@ -4,7 +4,7 @@ const container = document.getElementById("Container");
 
     function scrollToIndex(index) {
       const x = index * window.innerWidth;
-      container.scrollTo({ left: x, behavior: "smooth" });
+      container.scrollTo({ left: x, behavior: "auto" }); //smooth para que sea lento
     }
 
     function scrollNext() {

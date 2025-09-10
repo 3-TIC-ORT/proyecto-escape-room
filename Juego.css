@@ -152,3 +152,47 @@ background-color: rgb(201, 184, 184);
     background-color: rgb(60, 160, 160);
     right: 11vw;
 }
+
+.lampara {
+    position: absolute;
+    background-color: rgb(238, 238, 136);
+    right: 2vw;
+    height: 60vh;
+    width: 5vw;
+    font-size: small;
+}
+
+.formas {
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    background-color: rgb(175, 167, 167);
+    border-width: 10px;
+    border-color: rgb(90, 84, 84);
+}
+
+.mesa {
+    position: absolute;
+    background-color: rgba(117, 39, 39, 0.596);
+    bottom: 5vh;
+    width: 30vw;
+    height: 23vh;
+    text-align: center;
+}
+
+.sarcofago2 {
+    position: absolute;
+    background-color: goldenrod;
+    width: 30vw;
+    height: 20vh;
+    left: 3vw;
+    bottom: 5vh;
+    text-align: center;
+}
+
+.estante2 {
+    position: absolute;
+    background-color: beige;
+    left: 5vw;
+    top: 30vh;
+}

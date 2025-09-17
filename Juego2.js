@@ -31,7 +31,3 @@ const container = document.getElementById("Container");
     function irAPantalla(url) {
       window.location.href = url;
     }
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('pasarHabitacion');
-      btn.addEventListener('click', () => irAPantalla('Juego2.html'));
-    }); 

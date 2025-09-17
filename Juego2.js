@@ -31,3 +31,11 @@ const container = document.getElementById("Container");
     function irAPantalla(url) {
       window.location.href = url;
     }
+
+    function irAPantalla(url) {
+      window.location.href = url;
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('puerta');
+      btn.addEventListener('click', () => irAPantalla('Juego.html'));
+    }); 

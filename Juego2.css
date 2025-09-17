@@ -56,7 +56,7 @@ body {
 
 
 .pared1{
-    background-color: orangered;
+    background-color: rgb(102, 7, 102);
     position: relative;
 }
 .pared2{
@@ -65,7 +65,7 @@ body {
 
 }
 .pared3{
-    background-color: rgb(102, 7, 102);
+    background-color: orangered;
     position: relative;
 
 }
@@ -73,4 +73,11 @@ body {
     background-color: turquoise;
     position: relative;
 
+}
+.puerta {
+    background-color: peru;
+    width: 30vw;
+    height: 65vh;
+    left: 5vw;
+    bottom: 3vh;
 }

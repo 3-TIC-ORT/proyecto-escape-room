@@ -31,11 +31,7 @@ const container = document.getElementById("Container");
     function irAPantalla(url) {
       window.location.href = url;
     }
-
-    function irAPantalla(url) {
-      window.location.href = url;
-    }
     document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('puerta');
-      btn.addEventListener('click', () => irAPantalla('Juego.html'));
+      const btn = document.getElementById('pasarHabitacion');
+      btn.addEventListener('click', () => irAPantalla('../Habitacióon2/Juego2.html'));
     }); 

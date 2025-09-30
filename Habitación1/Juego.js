@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    background-color: yellow;
     font-size: 2rem;
     z-index: 1000;
   `;

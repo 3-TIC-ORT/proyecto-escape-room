@@ -264,10 +264,10 @@ background-color: rgb(201, 184, 184);
 
 .pila-oculta {
     position: absolute;
-    right: 10vw;   /* separala un poco del borde */
-    bottom: 20vh;
-    width: 50px;
-    height: 50px;
+    right: 15vw;   /* separala un poco del borde */
+    bottom: 40vh;
+    width: 20px;
+    height: 20px;
     background-color: yellow;
     display: flex;
     justify-content: center;

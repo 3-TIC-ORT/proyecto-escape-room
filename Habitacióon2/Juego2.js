@@ -39,3 +39,27 @@ const container = document.getElementById("Container");
       const btn = document.getElementById('puerta');
       btn.addEventListener('click', () => irAPantalla('../Habitación1/Juego.html'));
     }); 
+
+    const inventario = [];
+const slots = document.querySelectorAll(".item-slot");
+
+function agregarAlInventario(imgSrc) {
+  if (inventario.length >= slots.length) return; // inventario lleno
+  inventario.push(imgSrc);
+
+  for (let slot of slots) {
+    if (!slot.hasChildNodes()) {
+      slot.innerHTML = `<img src="${imgSrc}" alt="item">`;
+      break;
+    }
+  }
+}
+
+// ejemplo: clic en lámpara → obtenés una pila
+document.addEventListener('DOMContentLoaded', () => {
+  const lampara = document.querySelector(".lampara");
+  lampara.addEventListener("click", () => {
+    agregarAlInventario("pila.png");
+  });
+});
+

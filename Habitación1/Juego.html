@@ -9,15 +9,16 @@
 </head>
 <body>
   <div class="sidebar">
-    <a href="#">Item 1</a>
-    <a href="#">Item 2</a>
-    <a href="#">Item 3</a>
-    <a href="#">Item 4</a>
+    <a href="#" class="item"></a>
+    <a href="#" class="item"></a>
+    <a href="#" class="item"></a>
+    <a href="#" class="item"></a>
   </div>
   <button class="nav-btn nav-left" onclick="scrollPrev()">⟨</button>
   <button class="nav-btn nav-right" onclick="scrollNext()">⟩</button>
   <main class="Container" id="Container">
     <div class="paredes pared1" id="pared1">
+      <div class="trofeo">Trofeo</div>
       <p class="estante">Estante</p>
       <button class="esfinge" id="pasarHabitacion">Esfinge</button>
       <p class="libros">libros</p>
@@ -43,7 +44,9 @@
         <p class="sarcofago2">Sarcofago</p>
         <p class="mesa">Mesa</p>
         <button class="pantalla formas">Pantalla</button>
-        <p class="lampara">Lampara</p>
+        <p class="lampara" id="lampara">Lampara</p>
+        <!-- Pila escondida -->
+        <div class="pila-oculta" id="pila" style="display:none;">🔋</div>
       </div>
   </main>
     

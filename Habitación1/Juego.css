@@ -206,10 +206,11 @@ background-color: rgb(201, 184, 184);
 .lampara {
     position: absolute;
     background-color: rgb(238, 238, 136);
-    right: 2vw;
+    right: 20vw;
     height: 60vh;
     width: 5vw;
     font-size: small;
+    bottom: 10vh;
 }
 
 .formas {
@@ -246,3 +247,31 @@ background-color: rgb(201, 184, 184);
     left: 5vw;
     top: 30vh;
 }
+.trofeo {
+    background-color: brown;
+    font-size: small;
+    height: 80px;      /* un poco más grande */
+    width: 80px;       /* más ancho */
+    left: 10vw;
+    position: absolute;
+    top: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+}
+
+.pila-oculta {
+    position: absolute;
+    right: 10vw;   /* separala un poco del borde */
+    bottom: 20vh;
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;  /* más alto que todos los demás */
+  }

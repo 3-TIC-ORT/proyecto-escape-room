@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Variables globales ---
+  // --- Variables ---
   const container = document.getElementById("Container");
   const totalParedes = container.children.length;
   let currentIndex = 0;
@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let pilaLamparaAgarrada = false;
   let pilaTrofeoAgarrada = false;
 
-  // --- Funciones de scroll ---
+  let seleccionado1 = null;
+  let seleccionado2 = null;
+
+  // --- Scroll ---
   function scrollToIndex(index) {
     const x = index * window.innerWidth;
     container.scrollTo({ left: x, behavior: "auto" });
@@ -30,15 +33,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener("resize", () => scrollToIndex(currentIndex));
 
-  // --- Actualizar inventario en la sidebar ---
+  // --- Sidebar ---
+  const sidebarItems = document.querySelectorAll(".sidebar .item");
+
   function actualizarInventario() {
-    const sidebarItems = document.querySelectorAll(".sidebar .item");
     sidebarItems.forEach((item, index) => {
-      item.textContent = inventario[index] || "";
+      const obj = inventario[index] || "";
+      item.textContent = obj;
+
+      // tooltip
+      if (obj) {
+        item.setAttribute("data-nombre", 
+          obj === "🔦" ? "Linterna" : 
+          obj === "🔋" ? "Pila" : 
+          "Linterna con pila"
+        );
+      } else {
+        item.removeAttribute("data-nombre");
+      }
+
+      item.classList.remove("seleccionado");
     });
+
+    seleccionado1 = null;
+    seleccionado2 = null;
   }
 
-  // --- Lámpara y pila ---
+  // --- Selección y combinación de items ---
+  sidebarItems.forEach((item, index) => {
+    item.addEventListener("click", () => {
+      if (!item.textContent) return;
+
+      if (seleccionado1 === null) {
+        seleccionado1 = index;
+        item.classList.add("seleccionado");
+        return;
+      }
+
+      if (seleccionado2 === null && index !== seleccionado1) {
+        seleccionado2 = index;
+        item.classList.add("seleccionado");
+
+        const item1 = inventario[seleccionado1];
+        const item2 = inventario[seleccionado2];
+
+        // combinación linterna + pila
+        if ((item1 === "🔦" && item2 === "🔋") || (item1 === "🔋" && item2 === "🔦")) {
+          const linternaIndex = inventario.indexOf("🔦");
+          const pilaIndex = inventario.indexOf("🔋");
+          inventario[linternaIndex] = "🔦⚡";
+          inventario.splice(pilaIndex, 1);
+        }
+
+        sidebarItems.forEach(i => i.classList.remove("seleccionado"));
+        seleccionado1 = null;
+        seleccionado2 = null;
+        actualizarInventario();
+        return;
+      }
+
+      // deseleccionar
+      if (index === seleccionado1) {
+        item.classList.remove("seleccionado");
+        seleccionado1 = null;
+      } else if (index === seleccionado2) {
+        item.classList.remove("seleccionado");
+        seleccionado2 = null;
+      }
+    });
+  });
+
+  // --- Lampara y pila ---
   const lampara = document.getElementById("lampara");
   const pila = document.getElementById("pila");
 
@@ -50,48 +115,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   pila.addEventListener("click", () => {
     if (!pilaLamparaAgarrada) {
-      inventario.push("🔋");
+      inventario.push("🔦"); // linterna
       pila.style.display = "none";
       pilaLamparaAgarrada = true;
       actualizarInventario();
-      console.log("Inventario:", inventario);
     }
   });
 
-  // --- Trofeo y pila dentro ---
+  // --- Trofeo y pila ---
   const trofeo = document.querySelector(".trofeo");
-
-  const pilaEnTrofeo = document.createElement("div");
-  pilaEnTrofeo.textContent = "🔋";
-  pilaEnTrofeo.style.cssText = `
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 50px;
-    height: 50px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 2rem;
-    z-index: 1000;
-  `;
-  trofeo.appendChild(pilaEnTrofeo);
+  const pilaTrofeo = document.getElementById("pilaTrofeo");
 
   trofeo.addEventListener("click", () => {
     if (!pilaTrofeoAgarrada) {
-      pilaEnTrofeo.style.display = "flex";
+      pilaTrofeo.style.display = "flex";
     }
   });
 
-  pilaEnTrofeo.addEventListener("click", (e) => {
+  pilaTrofeo.addEventListener("click", (e) => {
     e.stopPropagation();
     if (!pilaTrofeoAgarrada) {
-      inventario.push("🔋");
-      pilaEnTrofeo.style.display = "none";
+      inventario.push("🔋"); // pila
+      pilaTrofeo.style.display = "none";
       pilaTrofeoAgarrada = true;
       actualizarInventario();
-      console.log("Inventario:", inventario);
     }
   });
 
@@ -101,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = '../Habitacióon2/Juego2.html';
   });
 
-  // --- Botones de scroll visibles ---
+  // --- Botones scroll ---
   const btnIzq = document.querySelector(".nav-left");
   const btnDer = document.querySelector(".nav-right");
   btnIzq.addEventListener("click", scrollPrev);

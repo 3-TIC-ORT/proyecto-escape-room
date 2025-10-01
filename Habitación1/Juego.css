@@ -264,14 +264,52 @@ background-color: rgb(201, 184, 184);
 
 .pila-oculta {
     position: absolute;
-    right: 15vw;   /* separala un poco del borde */
-    bottom: 40vh;
-    width: 20px;
-    height: 20px;
+    right: 22vw;   /* separala un poco del borde */
+    bottom: 60vh;
+    width: 10px;
+    height: 10px;
     background-color: yellow;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     z-index: 1000;  /* más alto que todos los demás */
+  }
+  #pilaTrofeo {
+    width: 0px !important;
+    height: 0px !important;   
+    bottom: auto;     
+    top: 100px;       
+    left: 13vw;       
+    transform: translateX(-50%);
+}
+.sidebar .item.seleccionado {
+    border: 3px solid yellow;
+  }
+  .sidebar .item {
+    position: relative;
+  }
+  
+  /* Texto que aparece al hacer hover */
+  .sidebar .item::after {
+    content: attr(data-nombre); /* toma el nombre del atributo data-nombre */
+    position: absolute;
+    bottom: 110%; /* arriba del item */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+  }
+  
+  /* Cuando pasas el mouse, se muestra */
+  .sidebar .item:hover::after {
+    opacity: 1;
   }

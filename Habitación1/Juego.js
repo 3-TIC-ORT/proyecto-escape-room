@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function actualizarInventario() {
     sidebarItems.forEach((item, index) => {
       const obj = inventario[index] || "";
-      item.textContent = obj;
+      item.textContent = obj ? obj : "";
 
       // tooltip
       if (obj) {

@@ -18,7 +18,7 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    width: 160px;         /* más angosta */
+    width: 160px;     
     height: 100vh;
     background-color: #333;
     color: white;
@@ -34,8 +34,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 120px;        /* más grande */
-    height: 120px;       /* más grande */
+    width: 120px;    
+    height: 120px;  
     background-color: #444;
     border-radius: 15px;
     color: white;
@@ -68,7 +68,7 @@ body {
   }
   
   .nav-right {
-    right: 170px;   /* = ancho sidebar (160px) + un poco de margen */
+    right: 170px;   
   }
 
 
@@ -250,8 +250,8 @@ background-color: rgb(201, 184, 184);
 .trofeo {
     background-color: brown;
     font-size: small;
-    height: 80px;      /* un poco más grande */
-    width: 80px;       /* más ancho */
+    height: 80px;     
+    width: 80px;    
     left: 10vw;
     position: absolute;
     top: 12vh;
@@ -264,7 +264,7 @@ background-color: rgb(201, 184, 184);
 
 .pila-oculta {
     position: absolute;
-    right: 22vw;   /* separala un poco del borde */
+    right: 22vw;
     bottom: 60vh;
     width: 10px;
     height: 10px;
@@ -273,7 +273,7 @@ background-color: rgb(201, 184, 184);
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 1000;  /* más alto que todos los demás */
+    z-index: 1000; 
   }
   #pilaTrofeo {
     width: 0px !important;
@@ -290,11 +290,11 @@ background-color: rgb(201, 184, 184);
     position: relative;
   }
   
-  /* Texto que aparece al hacer hover */
+  
   .sidebar .item::after {
-    content: attr(data-nombre); /* toma el nombre del atributo data-nombre */
+    content: attr(data-nombre); 
     position: absolute;
-    bottom: 110%; /* arriba del item */
+    bottom: 110%; 
     left: 50%;
     transform: translateX(-50%);
     background-color: black;
@@ -309,7 +309,7 @@ background-color: rgb(201, 184, 184);
     z-index: 1000;
   }
   
-  /* Cuando pasas el mouse, se muestra */
+ 
   .sidebar .item:hover::after {
     opacity: 1;
   }
@@ -317,7 +317,7 @@ background-color: rgb(201, 184, 184);
     position: fixed;
     top: 0;
     right: 0;
-    width: 160px;       /* ancho total de la barra */
+    width: 160px;       
     height: 100vh;
     background-color: #333;
     color: white;
@@ -330,7 +330,7 @@ background-color: rgb(201, 184, 184);
 }
 
 .sidebar a {
-    position: relative; /* necesario para que el ::after sea relativo al item */
+    position: relative; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -353,12 +353,12 @@ background-color: rgb(201, 184, 184);
 .sidebar a::after {
   content: attr(data-nombre);
   position: absolute;
-  left: -110%;  /* aparece a la izquierda del item */
-  top: 50%;
+  left: -105%; 
+  top: 30%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.8);
   color: white;
-  padding: 3px 6px;
+  padding: 5px 8px;
   border-radius: 5px;
   white-space: nowrap;
   opacity: 0;
@@ -368,6 +368,6 @@ background-color: rgb(201, 184, 184);
   z-index: 1000;
 }
 
-.sidebar a:hover::after {
-    opacity: 1;
+.sidebar a[data-nombre]:hover::after {
+  opacity: 1;
 }

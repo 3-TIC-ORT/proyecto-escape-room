@@ -371,3 +371,16 @@ background-color: rgb(201, 184, 184);
 .sidebar a[data-nombre]:hover::after {
   opacity: 1;
 }
+.sidebar .item.equipado {
+  outline: 3px solid limegreen;
+  box-shadow: 0 0 8px rgba(0,255,0,0.25);
+}
+
+/* estilo del objeto que aparece encima de la vitrina */
+#vitrina-sorpresa {
+  position: absolute;
+  font-size: 2rem;
+  pointer-events: none;
+  z-index: 2000;
+  transform: translate(-50%, -100%); /* centra horizontal y lo pone sobre la vitrina */
+}

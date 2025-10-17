@@ -153,4 +153,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnDer = document.querySelector(".nav-right");
   btnIzq.addEventListener("click", scrollPrev);
   btnDer.addEventListener("click", scrollNext);
+
+    // --- Vitrina y diamante (solo en pared 2) ---
+const vitrina = document.querySelector(".vitrina");
+const pared2 = document.getElementById("pared2");
+
+// Crear el diamante una sola vez y ubicarlo dentro de pared2
+const diamante = document.createElement("div");
+diamante.textContent = "💎";
+diamante.classList.add("diamante");
+diamante.style.display = "none";
+diamante.style.position = "absolute";
+diamante.style.top = "100px";  // ajustá según donde quieras que aparezca
+diamante.style.left = "180px";
+diamante.style.fontSize = "40px";
+diamante.style.cursor = "pointer";
+pared2.appendChild(diamante);
+
+// Mostrar el diamante si se tiene la linterna con pila
+vitrina.addEventListener("click", () => {
+  if (inventario.includes("🔦⚡")) {
+    diamante.style.display = "flex";
+  }
+});
+
 });

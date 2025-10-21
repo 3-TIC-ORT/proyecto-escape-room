@@ -164,8 +164,8 @@ diamante.textContent = "💎";
 diamante.classList.add("diamante");
 diamante.style.display = "none";
 diamante.style.position = "absolute";
-diamante.style.top = "100px";  // ajustá según donde quieras que aparezca
-diamante.style.left = "180px";
+diamante.style.top = "280px";  // ajustá según donde quieras que aparezca
+diamante.style.left = "632px";
 diamante.style.fontSize = "40px";
 diamante.style.cursor = "pointer";
 pared2.appendChild(diamante);

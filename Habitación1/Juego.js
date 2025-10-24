@@ -39,7 +39,34 @@ document.addEventListener('DOMContentLoaded', () => {
   function actualizarInventario() {
     sidebarItems.forEach((item, index) => {
       const obj = inventario[index] || "";
-      item.textContent = obj ? obj : "";
+      item.innerHTML = ""; // limpiamos el contenido
+
+      if (obj) {
+        const img = document.createElement("img");
+        img.style.width = "40px";
+        img.style.height = "40px";
+      
+        if (obj === "🔦") img.src = "../Elementos/linterna.png";
+        else if (obj === "🔋") img.src = "../Elementos/pila.png";
+        else if (obj === "🔦⚡") img.src = "../Elementos/linternaConPila.png";
+        else if (obj === "🪛") img.src = "../Elementos/destornillador.png";
+      
+        item.appendChild(img);
+      
+        // tooltip
+        item.setAttribute(
+          "data-nombre",
+          obj === "🔦"
+            ? "Linterna"
+            : obj === "🔋"
+            ? "Pila"
+            : obj === "🔦⚡"
+            ? "Linterna con pila"
+            : "Destornillador"
+        );
+      } else {
+        item.removeAttribute("data-nombre");
+      }
 
       // tooltip
       if (obj) {
@@ -115,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   pila.addEventListener("click", () => {
     if (!pilaLamparaAgarrada) {
-      inventario.push("🔦"); // linterna
+      inventario.push("linterna"); // linterna
       pila.style.display = "none";
       pilaLamparaAgarrada = true;
       actualizarInventario();
@@ -135,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   pilaTrofeo.addEventListener("click", (e) => {
     e.stopPropagation();
     if (!pilaTrofeoAgarrada) {
-      inventario.push("🔋"); // pila
+      inventario.push("pila"); // pila
       pilaTrofeo.style.display = "none";
       pilaTrofeoAgarrada = true;
       actualizarInventario();
@@ -363,7 +390,7 @@ if (mesa) {
   mesa.addEventListener("click", () => {
     if (cajonDesbloqueado) {
       if (!inventario.includes("🪛")) {
-        inventario.push("🪛");
+        inventario.push("destornillador");
         actualizarInventario();
         alert("¡Encontraste un destornillador!");
       }

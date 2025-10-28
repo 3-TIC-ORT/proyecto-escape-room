@@ -37,95 +37,85 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarItems = document.querySelectorAll(".sidebar .item");
 
   function actualizarInventario() {
+    const sidebarItems = document.querySelectorAll(".sidebar .item");
     sidebarItems.forEach((item, index) => {
       const obj = inventario[index] || "";
-      item.innerHTML = ""; // limpiamos el contenido
-
+      item.innerHTML = ""; // limpiamos contenido
+  
       if (obj) {
         const img = document.createElement("img");
-        img.style.width = "40px";
+        img.style.width = obj === "pila" ? "25px" : "40px"; // pila más delgada
         img.style.height = "40px";
-      
-        if (obj === "🔦") img.src = "../Elementos/linterna.png";
-        else if (obj === "🔋") img.src = "../Elementos/pila.png";
-        else if (obj === "🔦⚡") img.src = "../Elementos/linternaConPila.png";
-        else if (obj === "🪛") img.src = "../Elementos/destornillador.png";
-      
+        img.style.objectFit = "contain";
+  
+        if (obj === "linterna") img.src = "../Elementos/linterna.png";
+        else if (obj === "pila") img.src = "../Elementos/pila.png";
+        else if (obj === "linternaConPila") img.src = "../Elementos/linternaConPila.png";
+        else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
+  
         item.appendChild(img);
-      
-        // tooltip
+  
         item.setAttribute(
           "data-nombre",
-          obj === "🔦"
+          obj === "linterna"
             ? "Linterna"
-            : obj === "🔋"
+            : obj === "pila"
             ? "Pila"
-            : obj === "🔦⚡"
+            : obj === "linternaConPila"
             ? "Linterna con pila"
             : "Destornillador"
         );
       } else {
         item.removeAttribute("data-nombre");
       }
-
-      // tooltip
-      if (obj) {
-        item.setAttribute("data-nombre", 
-          obj === "🔦" ? "Linterna" : 
-          obj === "🔋" ? "Pila" : 
-          "Linterna con pila"
-        );
-      } else {
-        item.removeAttribute("data-nombre");
-      }
-
+  
       item.classList.remove("seleccionado");
     });
-
+  
     seleccionado1 = null;
     seleccionado2 = null;
   }
+  
+  // --- Lógica de selección y combinación ---
 
-  // --- Selección y combinación de items ---
   sidebarItems.forEach((item, index) => {
     item.addEventListener("click", () => {
-      if (!item.textContent) return;
-
+      if (!inventario[index]) return;
+  
+      // deseleccionar si ya estaba seleccionado
+      if (seleccionado1 === index) {
+        item.classList.remove("seleccionado");
+        seleccionado1 = null;
+        return;
+      }
+  
+      // si no hay selección previa
       if (seleccionado1 === null) {
         seleccionado1 = index;
         item.classList.add("seleccionado");
         return;
       }
-
-      if (seleccionado2 === null && index !== seleccionado1) {
+  
+      // si seleccionás un segundo ítem distinto
+      if (seleccionado1 !== null && seleccionado1 !== index) {
         seleccionado2 = index;
-        item.classList.add("seleccionado");
-
+        sidebarItems[seleccionado2].classList.add("seleccionado");
+  
         const item1 = inventario[seleccionado1];
         const item2 = inventario[seleccionado2];
-
-        // combinación linterna + pila
-        if ((item1 === "🔦" && item2 === "🔋") || (item1 === "🔋" && item2 === "🔦")) {
-          const linternaIndex = inventario.indexOf("🔦");
-          const pilaIndex = inventario.indexOf("🔋");
-          inventario[linternaIndex] = "🔦⚡";
-          inventario.splice(pilaIndex, 1);
-        }
-
+  
+// combinación linterna + pila
+if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 === "linterna")) {
+  const linternaIndex = inventario.indexOf("linterna");
+  const pilaIndex = inventario.indexOf("pila");
+  inventario[linternaIndex] = "linternaConPila";
+  inventario.splice(pilaIndex, 1);
+}
+  
         sidebarItems.forEach(i => i.classList.remove("seleccionado"));
         seleccionado1 = null;
         seleccionado2 = null;
         actualizarInventario();
-        return;
-      }
-
-      // deseleccionar
-      if (index === seleccionado1) {
-        item.classList.remove("seleccionado");
-        seleccionado1 = null;
-      } else if (index === seleccionado2) {
-        item.classList.remove("seleccionado");
-        seleccionado2 = null;
       }
     });
   });
@@ -400,15 +390,3 @@ if (mesa) {
   });
 }
 
-// Detectar cuando se cambia de pared y mostrar puzzle en la 4
-container.addEventListener("scroll", () => {
-  currentIndex = Math.round(container.scrollLeft / window.innerWidth);
-
-  // si estamos en la pared 4 (índice 3)
-  if (currentIndex === 3) {
-    crearPantallaColores();
-  } else {
-    const pantalla = document.getElementById("pantallaColores");
-    if (pantalla) pantalla.remove();
-  }
-});

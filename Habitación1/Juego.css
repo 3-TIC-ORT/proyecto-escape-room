@@ -105,6 +105,7 @@ body {
 
 .pared1{
   background-image: url('../Elementos/Egipcio\ a.png');
+  background-size: cover;
     position: relative;
 }
 .pared2{
@@ -138,24 +139,18 @@ position: absolute;
     margin-left: 50px;
     text-align: center;
     position: absolute;
-    left: 7vw;
-    top: 50vh;
+    left: 2.8vw;
+    top: 42svh;
+    height: 147.9px;
+    width: 243.1px;
 }
-.estante {
-    background-color: maroon;
-    text-align: center;
-    color: blanchedalmond;
-    position: absolute;
-left: 8vw;
-top: 19vh;
-}
+
 .esfinge {
-    background-image: url("../Elementos/esfinge.png");
     position: absolute;
-    top: 15vh;
-    right: 8vw;
-    width: 15vw;
-    height: 70vh;
+    bottom: 22vh;
+    right: 16vw;
+    width: 446.9px;
+    height: 475px;
 }
 
 
@@ -178,8 +173,10 @@ top: 19vh;
 .vitrina {
 position: absolute;
 background-color: coral;
-left: 40vw;
-bottom: 40vh;
+left: 30vw;
+bottom: 0vh;
+height: 359.5px;
+width: 177.5px;
 }
 .reja {
 position: absolute;
@@ -248,13 +245,12 @@ background-color: rgb(201, 184, 184);
     top: 30vh;
 }
 .trofeo {
-    background-color: brown;
     font-size: small;
     height: 80px;     
     width: 80px;    
-    left: 10vw;
+    left: 8.3vw;
     position: absolute;
-    top: 12vh;
+    top: 20.2vh;
     display: flex;
     justify-content: center;
     align-items: center;

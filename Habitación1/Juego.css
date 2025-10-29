@@ -184,7 +184,6 @@ width: 200px;
 position: absolute;
 right: 18vw;
 top: 10vh;
-background-color: rgb(201, 184, 184);
 width: 170px;
 height: 100px;
 }
@@ -206,10 +205,9 @@ height: 100px;
 
 .lampara {
     position: absolute;
-    background-color: rgb(238, 238, 136);
-    right: 20vw;
-    height: 60vh;
-    width: 5vw;
+    right: 14vw;
+    height: 480px;
+    width: 166px;
     font-size: small;
     bottom: 10vh;
 }
@@ -234,11 +232,10 @@ height: 100px;
 
 .sarcofago2 {
     position: absolute;
-    background-color: goldenrod;
-    width: 30vw;
-    height: 20vh;
-    left: 3vw;
-    bottom: 5vh;
+    width: 480px;
+    height: 80px;
+    left: 1vw;
+    bottom: 23vh;
     text-align: center;
 }
 
@@ -268,7 +265,6 @@ height: 100px;
     bottom: 60vh;
     width: 10px;
     height: 10px;
-    background-color: yellow;
     display: flex;
     justify-content: center;
     align-items: center;

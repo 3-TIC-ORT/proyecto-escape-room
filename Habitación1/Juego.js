@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         img.style.objectFit = "contain";
   
         if (obj === "linterna") img.src = "../Elementos/linterna.png";
-        else if (obj === "pila") img.src = "../Elementos/pila.png";
-        else if (obj === "linternaConPila") img.src = "../Elementos/linternaConPila.png";
+        else if (obj === "pila") img.src = "../Elementos/pila.png"; 
+        else if (obj === "linternaConPila") img.src = "../Elementos/Linterna prendida.png";
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
   
         item.appendChild(img);

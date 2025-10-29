@@ -193,90 +193,18 @@ vitrina.addEventListener("click", () => {
     diamante.style.display = "flex";
   }
 });
-
+const destornilladorVisible = document.getElementById("destornilladorVisible");
+  if (destornilladorVisible) {
+    destornilladorVisible.addEventListener("click", () => {
+      if (!inventario.includes("destornillador")) {
+        inventario.push("destornillador");
+        actualizarInventario();
+        destornilladorVisible.style.display = "none";
+      }
+    });
+  }
 });
 
-function crearPantallaColores() {
-  if (currentIndex !== 3) return; // solo pared 4
-  if (document.getElementById("pantallaColores")) return;
-
-  const pantalla = document.createElement("div");
-  pantalla.id = "pantallaColores";
-  pantalla.style.position = "absolute";
-  pantalla.style.top = "150px";
-  pantalla.style.left = "50%";
-  pantalla.style.transform = "translateX(-50%)";
-  pantalla.style.display = "flex";
-  pantalla.style.gap = "20px";
-
-  const formas = ["50%", "0%", "20%", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%)"]; 
-  // círculo, cuadrado, rombo y triángulo
-
-  for (let i = 0; i < 4; i++) {
-    const forma = document.createElement("div");
-    forma.classList.add("formaColor");
-    forma.style.width = "50px";
-    forma.style.height = "50px";
-    forma.style.background = "gray";
-    forma.style.cursor = "pointer";
-    forma.dataset.index = i;
-
-    // aplicar la forma correspondiente
-    if (i === 3) {
-      forma.style.clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)"; // triángulo
-    } else {
-      forma.style.borderRadius = formas[i];
-    }
-
-    forma.addEventListener("click", () => {
-      const colores = ["rojo", "verde", "azul", "amarillo", "violeta"];
-      const actual = coloresSeleccionados[i];
-      const nuevo =
-        colores[(colores.indexOf(actual) + 1) % colores.length] || "rojo";
-      coloresSeleccionados[i] = nuevo;
-      forma.style.background = nuevo;
-
-      verificarPuzzleColores();
-    });
-
-    pantalla.appendChild(forma);
-  }
-
-  document.body.appendChild(pantalla);
-}
-
-function verificarPuzzleColores() {
-  if (
-    coloresSeleccionados[0] === coloresCorrectos[0] &&
-    coloresSeleccionados[1] === coloresCorrectos[1] &&
-    coloresSeleccionados[2] === coloresCorrectos[2] &&
-    coloresSeleccionados[3] === coloresCorrectos[3]
-  ) {
-    desbloquearCajon();
-  }
-}
-
-// --- CAJÓN DE LA MESA ---
-let cajonDesbloqueado = false;
-function desbloquearCajon() {
-  cajonDesbloqueado = true;
-  alert("¡Escuchás un clic en el cajón de la mesa!");
-}
-
-const mesa = document.getElementById("mesa");
-if (mesa) {
-  mesa.addEventListener("click", () => {
-    if (cajonDesbloqueado) {
-      if (!inventario.includes("🪛")) {
-        inventario.push("🪛");
-        actualizarInventario();
-        alert("¡Encontraste un destornillador!");
-      }
-    } else {
-      alert("El cajón está cerrado.");
-    }
-  });
-}
 
 // --- Mostrar pantalla solo en pared 4 ---
 function mostrarPared(index) {
@@ -387,6 +315,7 @@ if (mesa) {
     } else {
       alert("El cajón está cerrado.");
     }
+    
   });
 }
 

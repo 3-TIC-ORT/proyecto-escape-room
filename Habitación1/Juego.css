@@ -380,3 +380,13 @@ height: 100px;
   z-index: 2000;
   transform: translate(-50%, -100%); /* centra horizontal y lo pone sobre la vitrina */
 }
+.destornillador-visible {
+  position: absolute;
+  bottom: 9vh;
+  left: 0.4vw;
+  width: 45px;
+  height: auto;
+  cursor: pointer;
+  z-index: 800;
+  transform: rotate(-30deg)
+}

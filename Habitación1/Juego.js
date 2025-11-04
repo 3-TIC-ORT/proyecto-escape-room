@@ -175,24 +175,60 @@ if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 ===
 const vitrina = document.querySelector(".vitrina");
 const pared2 = document.getElementById("pared2");
 
-// Crear el diamante una sola vez y ubicarlo dentro de pared2
-const diamante = document.createElement("div");
-diamante.textContent = "💎";
-diamante.classList.add("diamante");
-diamante.style.display = "none";
-diamante.style.position = "absolute";
-diamante.style.top = "280px";  // ajustá según donde quieras que aparezca
-diamante.style.left = "632px";
-diamante.style.fontSize = "40px";
-diamante.style.cursor = "pointer";
-pared2.appendChild(diamante);
+
 
 // Mostrar el diamante si se tiene la linterna con pila
 vitrina.addEventListener("click", () => {
-  if (inventario.includes("🔦⚡")) {
-    diamante.style.display = "flex";
+  if (inventario.includes("linternaConPila")) {
+    mostrarSimbolosVitrina();
   }
 });
+// --- Símbolos escondidos en la vitrina ---
+// Solo se crean una vez
+
+let simbolosRevelados = false;
+let simbolosElementos = []; // guardamos los elementos creados para poder borrarlos
+
+function mostrarSimbolosVitrina() {
+  if (simbolosRevelados) return;
+  simbolosRevelados = true;
+
+  const simbolos = [
+    { nombre: "piramideNaranja", archivo: "piramide naranja.png" },
+    { nombre: "cruzRosa", archivo: "cruz rosa.png" },
+    { nombre: "ojoVerde", archivo: "ojo verde.png" },
+    { nombre: "cucarachaAzul", archivo: "cucaracha azul.png" }
+  ];
+
+  const imgSize = 25;
+
+  // posiciones relativas ajustadas: [top%, left%]
+  const posiciones = [
+    [0.53, 0.3],
+    [0.55, 0.42],
+    [0.58, 0.57],
+    [0.60, 0.7]
+  ];
+
+  simbolos.forEach((simbolo, i) => {
+    const img = document.createElement("img");
+    img.src = `../Elementos/${simbolo.archivo}`;
+    img.id = simbolo.nombre;
+    img.style.position = "absolute";
+
+    // calcular posición dentro de pared2 (vitrina incluida)
+    img.style.top = `${posiciones[i][0] * pared2.clientHeight - 5}px`; // subido 5px
+    img.style.left = `${posiciones[i][1] * pared2.clientWidth}px`;
+
+    img.style.width = `${imgSize}px`;
+    img.style.height = `${imgSize}px`;
+    img.style.pointerEvents = "none";
+    img.style.zIndex = "1000";
+
+    pared2.appendChild(img);
+    simbolosElementos.push(img);
+  });
+}
 const destornilladorVisible = document.getElementById("destornilladorVisible");
   if (destornilladorVisible) {
     destornilladorVisible.addEventListener("click", () => {
@@ -302,20 +338,6 @@ function desbloquearCajon() {
   alert("¡Escuchás un clic en el cajón de la mesa!");
 }
 
-// Mesa (para obtener el destornillador)
 
-if (mesa) {
-  mesa.addEventListener("click", () => {
-    if (cajonDesbloqueado) {
-      if (!inventario.includes("🪛")) {
-        inventario.push("destornillador");
-        actualizarInventario();
-        alert("¡Encontraste un destornillador!");
-      }
-    } else {
-      alert("El cajón está cerrado.");
-    }
-    
-  });
-}
+
 

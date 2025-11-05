@@ -11,10 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let seleccionado1 = null;
   let seleccionado2 = null;
 
+  // Símbolos pared4 y colores
+  let simbolosPared4 = [];
+  const coloresSimbolo = ["naranja", "azul", "verde", "rosa"];
+  let puzzleSimbolosResuelto = false;
+
   // --- Scroll ---
   function scrollToIndex(index) {
     const x = index * window.innerWidth;
     container.scrollTo({ left: x, behavior: "auto" });
+    mostrarPared(index);
   }
 
   function scrollNext() {
@@ -37,81 +43,64 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarItems = document.querySelectorAll(".sidebar .item");
 
   function actualizarInventario() {
-    const sidebarItems = document.querySelectorAll(".sidebar .item");
     sidebarItems.forEach((item, index) => {
       const obj = inventario[index] || "";
-      item.innerHTML = ""; // limpiamos contenido
-  
+      item.innerHTML = "";
       if (obj) {
         const img = document.createElement("img");
-        img.style.width = obj === "pila" ? "25px" : "40px"; // pila más delgada
+        img.style.width = obj === "pila" ? "25px" : "40px";
         img.style.height = "40px";
         img.style.objectFit = "contain";
-  
+
         if (obj === "linterna") img.src = "../Elementos/linterna.png";
-        else if (obj === "pila") img.src = "../Elementos/pila.png"; 
+        else if (obj === "pila") img.src = "../Elementos/pila.png";
         else if (obj === "linternaConPila") img.src = "../Elementos/Linterna prendida.png";
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
-  
+        else if (obj === "llave") img.src = "../Elementos/llave.png";
+
         item.appendChild(img);
-  
-        item.setAttribute(
-          "data-nombre",
-          obj === "linterna"
-            ? "Linterna"
-            : obj === "pila"
-            ? "Pila"
-            : obj === "linternaConPila"
-            ? "Linterna con pila"
-            : "Destornillador"
-        );
+        item.setAttribute("data-nombre", obj);
       } else {
         item.removeAttribute("data-nombre");
       }
-  
       item.classList.remove("seleccionado");
     });
-  
+
     seleccionado1 = null;
     seleccionado2 = null;
   }
-  
-  // --- Lógica de selección y combinación ---
 
+  // --- Lógica de selección ---
   sidebarItems.forEach((item, index) => {
     item.addEventListener("click", () => {
       if (!inventario[index]) return;
-  
-      // deseleccionar si ya estaba seleccionado
+
       if (seleccionado1 === index) {
         item.classList.remove("seleccionado");
         seleccionado1 = null;
         return;
       }
-  
-      // si no hay selección previa
+
       if (seleccionado1 === null) {
         seleccionado1 = index;
         item.classList.add("seleccionado");
         return;
       }
-  
-      // si seleccionás un segundo ítem distinto
+
       if (seleccionado1 !== null && seleccionado1 !== index) {
         seleccionado2 = index;
         sidebarItems[seleccionado2].classList.add("seleccionado");
-  
+
         const item1 = inventario[seleccionado1];
         const item2 = inventario[seleccionado2];
-  
-// combinación linterna + pila
-if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 === "linterna")) {
-  const linternaIndex = inventario.indexOf("linterna");
-  const pilaIndex = inventario.indexOf("pila");
-  inventario[linternaIndex] = "linternaConPila";
-  inventario.splice(pilaIndex, 1);
-}
-  
+
+        if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 === "linterna")) {
+          const linternaIndex = inventario.indexOf("linterna");
+          const pilaIndex = inventario.indexOf("pila");
+          if (linternaIndex !== -1) inventario[linternaIndex] = "linternaConPila";
+          if (pilaIndex !== -1) inventario.splice(pilaIndex, 1);
+        }
+
         sidebarItems.forEach(i => i.classList.remove("seleccionado"));
         seleccionado1 = null;
         seleccionado2 = null;
@@ -125,14 +114,12 @@ if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 ===
   const pila = document.getElementById("pila");
 
   lampara.addEventListener("click", () => {
-    if (!pilaLamparaAgarrada) {
-      pila.style.display = "flex";
-    }
+    if (!pilaLamparaAgarrada) pila.style.display = "flex";
   });
 
   pila.addEventListener("click", () => {
     if (!pilaLamparaAgarrada) {
-      inventario.push("linterna"); // linterna
+      inventario.push("linterna");
       pila.style.display = "none";
       pilaLamparaAgarrada = true;
       actualizarInventario();
@@ -144,15 +131,13 @@ if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 ===
   const pilaTrofeo = document.getElementById("pilaTrofeo");
 
   trofeo.addEventListener("click", () => {
-    if (!pilaTrofeoAgarrada) {
-      pilaTrofeo.style.display = "flex";
-    }
+    if (!pilaTrofeoAgarrada) pilaTrofeo.style.display = "flex";
   });
 
   pilaTrofeo.addEventListener("click", (e) => {
     e.stopPropagation();
     if (!pilaTrofeoAgarrada) {
-      inventario.push("pila"); // pila
+      inventario.push("pila");
       pilaTrofeo.style.display = "none";
       pilaTrofeoAgarrada = true;
       actualizarInventario();
@@ -161,183 +146,125 @@ if ((item1 === "linterna" && item2 === "pila") || (item1 === "pila" && item2 ===
 
   // --- Botón pasar habitación ---
   const btnPasarHabitacion = document.getElementById('pasarHabitacion');
-  btnPasarHabitacion.addEventListener('click', () => {
-    window.location.href = '../Habitacióon2/Juego2.html';
-  });
+  if (btnPasarHabitacion) {
+    btnPasarHabitacion.addEventListener('click', () => {
+      window.location.href = '../Habitacióon2/Juego2.html';
+    });
+  }
 
   // --- Botones scroll ---
   const btnIzq = document.querySelector(".nav-left");
   const btnDer = document.querySelector(".nav-right");
-  btnIzq.addEventListener("click", scrollPrev);
-  btnDer.addEventListener("click", scrollNext);
+  if (btnIzq) btnIzq.addEventListener("click", scrollPrev);
+  if (btnDer) btnDer.addEventListener("click", scrollNext);
 
-    // --- Vitrina y diamante (solo en pared 2) ---
-const vitrina = document.querySelector(".vitrina");
-const pared2 = document.getElementById("pared2");
+  // --- VITRINA (pared 2) ---
+  const vitrina = document.getElementById("vitrina");
+  const pared2 = document.getElementById("pared2");
+  let simbolosRevelados = false;
+  let simbolosElementos = [];
 
+  function mostrarSimbolosVitrina() {
+    if (simbolosRevelados) return;
+    simbolosRevelados = true;
 
+    const simbolos = [
+      { nombre: "piramideNaranja", archivo: "piramide naranja.png" },
+      { nombre: "cruzRosa", archivo: "cruz rosa.png" },
+      { nombre: "ojoVerde", archivo: "ojo verde.png" },
+      { nombre: "cucarachaAzul", archivo: "cucaracha azul.png" }
+    ];
 
-// Mostrar el diamante si se tiene la linterna con pila
-vitrina.addEventListener("click", () => {
-  if (inventario.includes("linternaConPila")) {
-    mostrarSimbolosVitrina();
+    const posiciones = [
+      [0.52, 0.37],
+      [0.54, 0.39],
+      [0.51, 0.424],
+      [0.53, 0.444]
+    ];
+
+    simbolos.forEach((simbolo, i) => {
+      const img = document.createElement("img");
+      img.src = `../Elementos/${simbolo.archivo}`;
+      img.id = simbolo.nombre;
+      img.style.position = "absolute";
+      img.style.top = `${posiciones[i][0] * pared2.clientHeight}px`;
+      img.style.left = `${posiciones[i][1] * pared2.clientWidth}px`;
+      img.style.width = "25px";
+      img.style.height = "25px";
+      img.style.pointerEvents = "none";
+      img.style.zIndex = "1000";
+
+      pared2.appendChild(img);
+      simbolosElementos.push(img);
+    });
   }
-});
-// --- Símbolos escondidos en la vitrina ---
-// Solo se crean una vez
 
-let simbolosRevelados = false;
-let simbolosElementos = []; // guardamos los elementos creados para poder borrarlos
+  function ocultarSimbolosVitrina() {
+    simbolosElementos.forEach(el => el.remove());
+    simbolosElementos = [];
+    simbolosRevelados = false;
+  }
 
-function mostrarSimbolosVitrina() {
-  if (simbolosRevelados) return;
-  simbolosRevelados = true;
-
-  const simbolos = [
-    { nombre: "piramideNaranja", archivo: "piramide naranja.png" },
-    { nombre: "cruzRosa", archivo: "cruz rosa.png" },
-    { nombre: "ojoVerde", archivo: "ojo verde.png" },
-    { nombre: "cucarachaAzul", archivo: "cucaracha azul.png" }
-  ];
-
-  const imgSize = 25;
-
-  // posiciones relativas ajustadas: [top%, left%]
-  const posiciones = [
-    [0.53, 0.3],
-    [0.55, 0.42],
-    [0.58, 0.57],
-    [0.60, 0.7]
-  ];
-
-  simbolos.forEach((simbolo, i) => {
-    const img = document.createElement("img");
-    img.src = `../Elementos/${simbolo.archivo}`;
-    img.id = simbolo.nombre;
-    img.style.position = "absolute";
-
-    // calcular posición dentro de pared2 (vitrina incluida)
-    img.style.top = `${posiciones[i][0] * pared2.clientHeight - 5}px`; // subido 5px
-    img.style.left = `${posiciones[i][1] * pared2.clientWidth}px`;
-
-    img.style.width = `${imgSize}px`;
-    img.style.height = `${imgSize}px`;
-    img.style.pointerEvents = "none";
-    img.style.zIndex = "1000";
-
-    pared2.appendChild(img);
-    simbolosElementos.push(img);
-  });
-}
-const destornilladorVisible = document.getElementById("destornilladorVisible");
-  if (destornilladorVisible) {
-    destornilladorVisible.addEventListener("click", () => {
-      if (!inventario.includes("destornillador")) {
-        inventario.push("destornillador");
-        actualizarInventario();
-        destornilladorVisible.style.display = "none";
+  if (vitrina) {
+    vitrina.addEventListener("click", () => {
+      if (inventario.includes("linternaConPila")) {
+        mostrarSimbolosVitrina();
       }
     });
   }
-});
 
+  // --- Símbolos pared4 ---
+  function crearSimbolosPared4() {
+    if (simbolosPared4.length > 0 || puzzleSimbolosResuelto) return;
+    const cont = document.getElementById("pared4");
+    if (!cont) return;
 
-// --- Mostrar pantalla solo en pared 4 ---
-function mostrarPared(index) {
-  // tu código original para cambiar de pared
-  currentIndex = index;
+    const simbolos = ["piramide", "cruz", "ojo", "cucaracha"];
+    const posiciones = ["45.6%", "50.6%", "55.6%", "60.6%"];;
+    const tamaño = 50;
 
-  // eliminar pantalla si no es pared 4
-  const pantalla = document.getElementById("pantallaColores");
-  if (pantalla) pantalla.remove();
+    simbolos.forEach((nombre, i) => {
+      const img = document.createElement("img");
+      img.dataset.simbolo = nombre;
+      img.dataset.colorIndex = 0;
+      img.src = `../Elementos/${nombre} naranja.png`;
+      img.style.position = "absolute";
+      img.style.top = "45%";
+      img.style.left = posiciones[i];
+      img.style.width = `${tamaño}px`;
+      img.style.cursor = "pointer";
+      img.style.zIndex = "2000";
 
-  // si es pared 4, crearla
-  if (index === 3) crearPantallaColores();
-}
-// --- PUZZLE DE COLORES EN LA PARED 4 ---
+      img.addEventListener("click", () => {
+        if (puzzleSimbolosResuelto) return;
+        let index = parseInt(img.dataset.colorIndex);
+        index = (index + 1) % coloresSimbolo.length;
+        img.dataset.colorIndex = index;
+        const color = coloresSimbolo[index];
+        img.src = `../Elementos/${nombre} ${color}.png`;
+      });
 
-const coloresCorrectos = ["rojo", "verde", "azul", "amarillo"];
-let coloresSeleccionados = ["", "", "", ""];
+      cont.appendChild(img);
+      simbolosPared4.push(img);
+    });
+  }
 
-// Crear pantalla de las 4 formas
-function crearPantallaColores() {
-  // si ya existe, no la vuelvas a crear
-  if (document.getElementById("pantallaColores")) return;
+  function eliminarSimbolosPared4() {
+    simbolosPared4.forEach(el => el.remove());
+    simbolosPared4 = [];
+  }
 
-  const pantalla = document.createElement("div");
-  pantalla.id = "pantallaColores";
-  pantalla.style.position = "absolute";
-  pantalla.style.top = "150px";
-  pantalla.style.left = "50%";
-  pantalla.style.transform = "translateX(-50%)";
-  pantalla.style.display = "flex";
-  pantalla.style.gap = "20px";
-  pantalla.style.zIndex = "500";
-
-  const formas = ["50%", "0%", "20%", "triangulo"]; // círculo, cuadrado, rombo, triángulo
-
-  for (let i = 0; i < 4; i++) {
-    const forma = document.createElement("div");
-    forma.classList.add("formaColor");
-    forma.style.width = "60px";
-    forma.style.height = "60px";
-    forma.style.background = "gray";
-    forma.style.cursor = "pointer";
-    forma.dataset.index = i;
-
-    // Dar forma visual
-    if (formas[i] === "triangulo") {
-      forma.style.width = "0";
-      forma.style.height = "0";
-      forma.style.borderLeft = "30px solid transparent";
-      forma.style.borderRight = "30px solid transparent";
-      forma.style.borderBottom = "60px solid gray";
-      forma.dataset.tipo = "triangulo";
+  // --- Mostrar pared ---
+  function mostrarPared(index) {
+    currentIndex = index;
+    if (index === 3) {
+      crearSimbolosPared4();
     } else {
-      forma.style.borderRadius = formas[i];
+      eliminarSimbolosPared4();
     }
 
-    forma.addEventListener("click", () => {
-      const colores = ["rojo", "verde", "azul", "amarillo", "violeta"];
-      const actual = coloresSeleccionados[i];
-      const nuevo =
-        colores[(colores.indexOf(actual) + 1) % colores.length] || "rojo";
-      coloresSeleccionados[i] = nuevo;
-
-      if (forma.dataset.tipo === "triangulo") {
-        forma.style.borderBottomColor = nuevo;
-      } else {
-        forma.style.background = nuevo;
-      }
-
-      verificarPuzzleColores();
-    });
-
-    pantalla.appendChild(forma);
+    if (index !== 1) ocultarSimbolosVitrina();
   }
 
-  document.body.appendChild(pantalla);
-}
-
-// Verificar si los colores son correctos
-function verificarPuzzleColores() {
-  if (
-    coloresSeleccionados[0] === coloresCorrectos[0] &&
-    coloresSeleccionados[1] === coloresCorrectos[1] &&
-    coloresSeleccionados[2] === coloresCorrectos[2] &&
-    coloresSeleccionados[3] === coloresCorrectos[3]
-  ) {
-    desbloquearCajon();
-  }
-}
-
-// Desbloquear cajón
-function desbloquearCajon() {
-  if (cajonDesbloqueado) return;
-  cajonDesbloqueado = true;
-  alert("¡Escuchás un clic en el cajón de la mesa!");
-}
-
-
-
-
+  window.mostrarPared = mostrarPared;
+});

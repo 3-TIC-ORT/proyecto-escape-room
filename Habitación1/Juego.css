@@ -390,3 +390,10 @@ height: 100px;
   z-index: 800;
   transform: rotate(-30deg)
 }
+.computadora {
+  width: 290px;
+  height: 235px;
+  bottom: -2vh;
+  right: -5vw;
+  position: relative;
+}

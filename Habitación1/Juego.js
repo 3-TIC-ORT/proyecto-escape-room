@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (obj === "pila") img.src = "../Elementos/pila.png";
         else if (obj === "linternaConPila") img.src = "../Elementos/Linterna prendida.png";
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
+        else if (obj === "llave") img.src = "../Elementos/llave.png";
 
         item.appendChild(img);
         item.setAttribute("data-nombre", obj);
@@ -288,6 +289,33 @@ if (reja) {
       const indiceDestornillador = inventario.indexOf("destornillador");
       if (indiceDestornillador !== -1) {
         inventario.splice(indiceDestornillador, 1);
+        actualizarInventario();
+      }
+    }
+  });
+}
+const llave = document.getElementById("llave");
+
+if (llave) {
+  llave.addEventListener("click", () => {
+    inventario.push("llave");
+    actualizarInventario();
+    llave.style.display = "none";
+  });
+}
+const piramideIzquierda = document.getElementById("piramideIzquierda");
+
+if (piramideIzquierda) {
+  piramideIzquierda.addEventListener("click", () => {
+    const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
+
+    if (seleccionadoNombre === "llave") {
+      piramideIzquierda.style.display = "none";
+
+      // OPCIONAL: que la llave se consuma al usarla
+      const i = inventario.indexOf("llave");
+      if (i !== -1) {
+        inventario.splice(i, 1);
         actualizarInventario();
       }
     }

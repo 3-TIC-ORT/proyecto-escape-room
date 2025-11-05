@@ -189,18 +189,18 @@ height: 100px;
 }
 .piramide {
     position: absolute;
-    width: 40vw;
-    height: 80vh;
+    width: 800px;
+    height: 460px;
     text-align: center;
-    bottom: 0vh;
+    bottom: 10vh;
 }
 .piIz {
-    background-color: aqua;
-    left: 11vw;
+
+    left: -7vw;
 }
 .piDe {
-    background-color: rgb(60, 160, 160);
-    right: 11vw;
+
+    right: 2vw;
 }
 
 .lampara {

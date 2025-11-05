@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Símbolos pared4 y colores
   let simbolosPared4 = [];
+  let coloresPared4 = {}; // guardamos el color actual de cada símbolo
   const coloresSimbolo = ["naranja", "azul", "verde", "rosa"];
   let puzzleSimbolosResuelto = false;
 
@@ -56,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (obj === "pila") img.src = "../Elementos/pila.png";
         else if (obj === "linternaConPila") img.src = "../Elementos/Linterna prendida.png";
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
-        else if (obj === "llave") img.src = "../Elementos/llave.png";
 
         item.appendChild(img);
         item.setAttribute("data-nombre", obj);
@@ -157,6 +157,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnDer = document.querySelector(".nav-right");
   if (btnIzq) btnIzq.addEventListener("click", scrollPrev);
   if (btnDer) btnDer.addEventListener("click", scrollNext);
+  const destornillador = document.getElementById("destornillador");
+
+if (destornillador) {
+  destornillador.addEventListener("click", () => {
+    // solo agarrarlo si aún no está en inventario
+    if (!inventario.includes("destornillador")) {
+      inventario.push("destornillador");
+      destornillador.style.display = "none"; // desaparece de la pared
+      actualizarInventario();
+    }
+  });
+}
 
   // --- VITRINA (pared 2) ---
   const vitrina = document.getElementById("vitrina");
@@ -202,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function ocultarSimbolosVitrina() {
     simbolosElementos.forEach(el => el.remove());
     simbolosElementos = [];
-    simbolosRevelados = false;
   }
 
   if (vitrina) {
@@ -215,19 +226,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Símbolos pared4 ---
   function crearSimbolosPared4() {
-    if (simbolosPared4.length > 0 || puzzleSimbolosResuelto) return;
     const cont = document.getElementById("pared4");
     if (!cont) return;
 
     const simbolos = ["piramide", "cruz", "ojo", "cucaracha"];
-    const posiciones = ["45.6%", "50.6%", "55.6%", "60.6%"];;
+    const posiciones = ["45.6%", "50.6%", "55.6%", "60.6%"];
     const tamaño = 50;
+
+    // si ya existen los símbolos, solo reinsertamos y ajustamos tamaño y posición
+    if (simbolosPared4.length > 0) {
+      simbolosPared4.forEach((img, i) => {
+        img.style.width = `${tamaño}px`;
+        img.style.left = posiciones[i];
+        cont.appendChild(img);
+      });
+      return;
+    }
 
     simbolos.forEach((nombre, i) => {
       const img = document.createElement("img");
       img.dataset.simbolo = nombre;
-      img.dataset.colorIndex = 0;
-      img.src = `../Elementos/${nombre} naranja.png`;
+      img.dataset.colorIndex = coloresPared4[nombre] || 0;
+      img.src = `../Elementos/${nombre} ${coloresSimbolo[img.dataset.colorIndex]}.png`;
       img.style.position = "absolute";
       img.style.top = "45%";
       img.style.left = posiciones[i];
@@ -242,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.dataset.colorIndex = index;
         const color = coloresSimbolo[index];
         img.src = `../Elementos/${nombre} ${color}.png`;
+        coloresPared4[nombre] = index; // guardamos color
       });
 
       cont.appendChild(img);
@@ -251,8 +272,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function eliminarSimbolosPared4() {
     simbolosPared4.forEach(el => el.remove());
-    simbolosPared4 = [];
   }
+  const reja = document.getElementById("reja"); // tu elemento reja
+
+if (reja) {
+  reja.addEventListener("click", () => {
+    // verificamos si el destornillador está seleccionado
+    const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
+
+    if (seleccionadoNombre === "destornillador") {
+      // desaparece la reja
+      reja.style.display = "none";
+
+      // opcional: eliminar destornillador del inventario si se gasta al usarlo
+      const indiceDestornillador = inventario.indexOf("destornillador");
+      if (indiceDestornillador !== -1) {
+        inventario.splice(indiceDestornillador, 1);
+        actualizarInventario();
+      }
+    }
+  });
+}
 
   // --- Mostrar pared ---
   function mostrarPared(index) {
@@ -263,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
       eliminarSimbolosPared4();
     }
 
-    if (index !== 1) ocultarSimbolosVitrina();
+    //if (index !== 1) ocultarSimbolosVitrina();
   }
 
   window.mostrarPared = mostrarPared;

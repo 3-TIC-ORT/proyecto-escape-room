@@ -303,14 +303,25 @@ if (llave) {
     llave.style.display = "none";
   });
 }
-const piramideIzquierda = document.getElementById("piramideIzquierda");
-
 if (piramideIzquierda) {
   piramideIzquierda.addEventListener("click", () => {
     const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
 
     if (seleccionadoNombre === "llave") {
+      // desaparecer la pirámide cerrada
       piramideIzquierda.style.display = "none";
+
+      // crear la pirámide abierta
+      const imgAbierta = document.createElement("img");
+      imgAbierta.id = "piramideIzquierdaAbierta";
+      imgAbierta.src = "../Elementos/piramide izquierda abierta.png";
+      imgAbierta.style.position = "absolute";
+      imgAbierta.style.left = "-7vw";
+      imgAbierta.style.bottom = "8vh";
+      imgAbierta.style.width = "788px";
+      imgAbierta.style.height = "460px";
+      imgAbierta.style.zIndex = piramideIzquierda.style.zIndex;
+      piramideIzquierda.parentElement.appendChild(imgAbierta);
 
       // OPCIONAL: que la llave se consuma al usarla
       const i = inventario.indexOf("llave");

@@ -229,12 +229,11 @@ if (destornillador) {
   function crearSimbolosPared4() {
     const cont = document.getElementById("pared4");
     if (!cont) return;
-
+  
     const simbolos = ["piramide", "cruz", "ojo", "cucaracha"];
-    const posiciones = ["45.6%", "50.6%", "55.6%", "60.6%"];
+    const posiciones = ["40.2%", "45.2%", "50.2%", "55.2%"];
     const tamaño = 50;
-
-    // si ya existen los símbolos, solo reinsertamos y ajustamos tamaño y posición
+  
     if (simbolosPared4.length > 0) {
       simbolosPared4.forEach((img, i) => {
         img.style.width = `${tamaño}px`;
@@ -243,7 +242,7 @@ if (destornillador) {
       });
       return;
     }
-
+  
     simbolos.forEach((nombre, i) => {
       const img = document.createElement("img");
       img.dataset.simbolo = nombre;
@@ -255,19 +254,37 @@ if (destornillador) {
       img.style.width = `${tamaño}px`;
       img.style.cursor = "pointer";
       img.style.zIndex = "2000";
+      cont.appendChild(img);
+      simbolosPared4.push(img);
+      coloresPared4[nombre] = parseInt(img.dataset.colorIndex);
 
+
+  
       img.addEventListener("click", () => {
         if (puzzleSimbolosResuelto) return;
+  
+        // Cambiar color
         let index = parseInt(img.dataset.colorIndex);
         index = (index + 1) % coloresSimbolo.length;
         img.dataset.colorIndex = index;
         const color = coloresSimbolo[index];
         img.src = `../Elementos/${nombre} ${color}.png`;
-        coloresPared4[nombre] = index; // guardamos color
-      });
+        coloresPared4[nombre] = index;
+  
+        // --- Verificar combinación correcta ---
+        const combinacionCorrecta =
+  coloresPared4["piramide"] === 0 && // naranja
+  coloresPared4["cucaracha"] === 1 && // azul
+  coloresPared4["ojo"] === 2 && // verde
+  coloresPared4["cruz"] === 3;  // rosa
 
-      cont.appendChild(img);
-      simbolosPared4.push(img);
+if (combinacionCorrecta) {
+  puzzleSimbolosResuelto = true;
+
+  const vidrio = document.getElementById("vidrioPc");
+  if (vidrio) vidrio.remove();
+}
+      });
     });
   }
 

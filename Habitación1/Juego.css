@@ -225,7 +225,7 @@ height: 100px;
     position: absolute;
     background-color: rgba(117, 39, 39, 0.596);
     bottom: 5vh;
-    width: 30vw;
+    width: 45vw;
     height: 23vh;
     text-align: center;
 }
@@ -401,7 +401,7 @@ height: 100px;
   width: 290px;
   height: 235px;
   bottom: -2vh;
-  right: -5vw;
+  right: -3vw;
   position: relative;
 }
 .llave {
@@ -410,4 +410,18 @@ height: 100px;
   position: relative;
   right: -26vw;
   top: -33.6vh;
+}
+.PC {
+  width: 95px;
+  height: 160px;
+  position: relative;
+  top: 10vh;
+  left: 5vw;
+}
+.Vidrio {
+  position: absolute;
+  top: 51vh;
+  left: 67.1vw;
+  height: 140px;
+  width: 23px;
 }

@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (obj === "linternaConPila") img.src = "../Elementos/Linterna prendida.png";
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
         else if (obj === "llave") img.src = "../Elementos/llave.png";
+        else if (obj === "papel") img.src = "../Elementos/papel.png"; // <-- papel
 
         item.appendChild(img);
         item.setAttribute("data-nombre", obj);
@@ -160,16 +161,28 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnDer) btnDer.addEventListener("click", scrollNext);
   const destornillador = document.getElementById("destornillador");
 
-if (destornillador) {
-  destornillador.addEventListener("click", () => {
-    // solo agarrarlo si aún no está en inventario
-    if (!inventario.includes("destornillador")) {
-      inventario.push("destornillador");
-      destornillador.style.display = "none"; // desaparece de la pared
-      actualizarInventario();
-    }
-  });
-}
+  if (destornillador) {
+    destornillador.addEventListener("click", () => {
+      if (!inventario.includes("destornillador")) {
+        inventario.push("destornillador");
+        destornillador.style.display = "none";
+        actualizarInventario();
+      }
+    });
+  }
+
+  // --- Papel (nuevo) ---
+  const papel = document.getElementById("papel");
+  if (papel) {
+    papel.addEventListener("click", () => {
+      if (!inventario.includes("papel")) {
+        inventario.push("papel");
+        papel.style.display = "none";
+        actualizarInventario();
+      }
+
+    });
+  }
 
   // --- VITRINA (pared 2) ---
   const vitrina = document.getElementById("vitrina");
@@ -212,11 +225,6 @@ if (destornillador) {
     });
   }
 
-  function ocultarSimbolosVitrina() {
-    simbolosElementos.forEach(el => el.remove());
-    simbolosElementos = [];
-  }
-
   if (vitrina) {
     vitrina.addEventListener("click", () => {
       if (inventario.includes("linternaConPila")) {
@@ -229,11 +237,11 @@ if (destornillador) {
   function crearSimbolosPared4() {
     const cont = document.getElementById("pared4");
     if (!cont) return;
-  
+
     const simbolos = ["piramide", "cruz", "ojo", "cucaracha"];
     const posiciones = ["40.2%", "45.2%", "50.2%", "55.2%"];
     const tamaño = 50;
-  
+
     if (simbolosPared4.length > 0) {
       simbolosPared4.forEach((img, i) => {
         img.style.width = `${tamaño}px`;
@@ -242,7 +250,7 @@ if (destornillador) {
       });
       return;
     }
-  
+
     simbolos.forEach((nombre, i) => {
       const img = document.createElement("img");
       img.dataset.simbolo = nombre;
@@ -258,32 +266,27 @@ if (destornillador) {
       simbolosPared4.push(img);
       coloresPared4[nombre] = parseInt(img.dataset.colorIndex);
 
-
-  
       img.addEventListener("click", () => {
         if (puzzleSimbolosResuelto) return;
-  
-        // Cambiar color
+
         let index = parseInt(img.dataset.colorIndex);
         index = (index + 1) % coloresSimbolo.length;
         img.dataset.colorIndex = index;
         const color = coloresSimbolo[index];
         img.src = `../Elementos/${nombre} ${color}.png`;
         coloresPared4[nombre] = index;
-  
-        // --- Verificar combinación correcta ---
+
         const combinacionCorrecta =
-  coloresPared4["piramide"] === 0 && // naranja
-  coloresPared4["cucaracha"] === 1 && // azul
-  coloresPared4["ojo"] === 2 && // verde
-  coloresPared4["cruz"] === 3;  // rosa
+          coloresPared4["piramide"] === 0 &&
+          coloresPared4["cucaracha"] === 1 &&
+          coloresPared4["ojo"] === 2 &&
+          coloresPared4["cruz"] === 3;
 
-if (combinacionCorrecta) {
-  puzzleSimbolosResuelto = true;
-
-  const vidrio = document.getElementById("vidrioPc");
-  if (vidrio) vidrio.remove();
-}
+        if (combinacionCorrecta) {
+          puzzleSimbolosResuelto = true;
+          const vidrio = document.getElementById("vidrioPc");
+          if (vidrio) vidrio.remove();
+        }
       });
     });
   }
@@ -291,64 +294,55 @@ if (combinacionCorrecta) {
   function eliminarSimbolosPared4() {
     simbolosPared4.forEach(el => el.remove());
   }
-  const reja = document.getElementById("reja"); // tu elemento reja
 
-if (reja) {
-  reja.addEventListener("click", () => {
-    // verificamos si el destornillador está seleccionado
-    const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
-
-    if (seleccionadoNombre === "destornillador") {
-      // desaparece la reja
-      reja.style.display = "none";
-
-      // opcional: eliminar destornillador del inventario si se gasta al usarlo
-      const indiceDestornillador = inventario.indexOf("destornillador");
-      if (indiceDestornillador !== -1) {
-        inventario.splice(indiceDestornillador, 1);
-        actualizarInventario();
+  const reja = document.getElementById("reja");
+  if (reja) {
+    reja.addEventListener("click", () => {
+      const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
+      if (seleccionadoNombre === "destornillador") {
+        reja.style.display = "none";
+        const indiceDestornillador = inventario.indexOf("destornillador");
+        if (indiceDestornillador !== -1) {
+          inventario.splice(indiceDestornillador, 1);
+          actualizarInventario();
+        }
       }
-    }
-  });
-}
-const llave = document.getElementById("llave");
+    });
+  }
 
-if (llave) {
-  llave.addEventListener("click", () => {
-    inventario.push("llave");
-    actualizarInventario();
-    llave.style.display = "none";
-  });
-}
-if (piramideIzquierda) {
-  piramideIzquierda.addEventListener("click", () => {
-    const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
+  const llave = document.getElementById("llave");
+  if (llave) {
+    llave.addEventListener("click", () => {
+      inventario.push("llave");
+      actualizarInventario();
+      llave.style.display = "none";
+    });
+  }
 
-    if (seleccionadoNombre === "llave") {
-      // desaparecer la pirámide cerrada
-      piramideIzquierda.style.display = "none";
+  if (piramideIzquierda) {
+    piramideIzquierda.addEventListener("click", () => {
+      const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
+      if (seleccionadoNombre === "llave") {
+        piramideIzquierda.style.display = "none";
+        const imgAbierta = document.createElement("img");
+        imgAbierta.id = "piramideIzquierdaAbierta";
+        imgAbierta.src = "../Elementos/piramide izquierda abierta.png";
+        imgAbierta.style.position = "absolute";
+        imgAbierta.style.left = "-7vw";
+        imgAbierta.style.bottom = "8vh";
+        imgAbierta.style.width = "788px";
+        imgAbierta.style.height = "460px";
+        imgAbierta.style.zIndex = piramideIzquierda.style.zIndex;
+        piramideIzquierda.parentElement.appendChild(imgAbierta);
 
-      // crear la pirámide abierta
-      const imgAbierta = document.createElement("img");
-      imgAbierta.id = "piramideIzquierdaAbierta";
-      imgAbierta.src = "../Elementos/piramide izquierda abierta.png";
-      imgAbierta.style.position = "absolute";
-      imgAbierta.style.left = "-7vw";
-      imgAbierta.style.bottom = "8vh";
-      imgAbierta.style.width = "788px";
-      imgAbierta.style.height = "460px";
-      imgAbierta.style.zIndex = piramideIzquierda.style.zIndex;
-      piramideIzquierda.parentElement.appendChild(imgAbierta);
-
-      // OPCIONAL: que la llave se consuma al usarla
-      const i = inventario.indexOf("llave");
-      if (i !== -1) {
-        inventario.splice(i, 1);
-        actualizarInventario();
+        const i = inventario.indexOf("llave");
+        if (i !== -1) {
+          inventario.splice(i, 1);
+          actualizarInventario();
+        }
       }
-    }
-  });
-}
+    });
+  }
 
   // --- Mostrar pared ---
   function mostrarPared(index) {
@@ -358,8 +352,6 @@ if (piramideIzquierda) {
     } else {
       eliminarSimbolosPared4();
     }
-
-    //if (index !== 1) ocultarSimbolosVitrina();
   }
 
   window.mostrarPared = mostrarPared;

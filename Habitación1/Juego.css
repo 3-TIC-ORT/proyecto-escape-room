@@ -432,3 +432,14 @@ height: 100px;
   bottom: 35vh;
   transform: rotate(40deg);
 }
+.piramide {
+  position: absolute;
+  z-index: 1;
+}
+
+.caja {
+  position: absolute;
+  z-index: 2;
+  bottom: 650px; /* ajustá según dónde querés que esté */
+  left: 1200px; /* ajustá la posición */
+}

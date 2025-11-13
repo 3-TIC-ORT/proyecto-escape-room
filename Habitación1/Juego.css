@@ -438,7 +438,7 @@ height: 100px;
 }
 
 .caja {
-  position: relative;
+  position: absolute;
   z-index: 2;
   bottom: 650px; /* ajustá según dónde querés que esté */
   left: 200px; /* ajustá la posición */

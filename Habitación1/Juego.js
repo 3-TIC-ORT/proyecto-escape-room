@@ -299,9 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Pirámide izquierda y caja ---
+  // --- Pirámide izquierda y cajas ---
   const piramideIzquierda = document.getElementById("piramideIzquierda");
-  const caja = document.getElementById("caja");
 
   if (piramideIzquierda) {
     piramideIzquierda.addEventListener("click", () => {
@@ -320,14 +319,26 @@ document.addEventListener('DOMContentLoaded', () => {
         imgAbierta.style.zIndex = "1";
         piramideIzquierda.parentElement.appendChild(imgAbierta);
 
-        if (caja) {
-          caja.style.display = "block";
-          caja.style.position = "absolute";
-          caja.style.left = "10vw";
-          caja.style.bottom = "10vh";
-          caja.style.width = "250px";
-          caja.style.zIndex = "2";
-        }
+        // --- Crear 4 cajas distintas ---
+        const cajasInfo = [
+          { left: "26vw", bottom: "15vh", width: "100px", height: "100px" },
+          { left: "18vw", bottom: "13vh", width: "120px", height: "120px" },
+          { left: "35vw", bottom: "12vh", width: "100px", height: "100px" },
+          { left: "23vw", bottom: "27.5vh", width: "70px", height: "70px" }
+        ];
+
+        cajasInfo.forEach((info, i) => {
+          const nuevaCaja = document.createElement("img");
+          nuevaCaja.src = "../Elementos/caja.png";
+          nuevaCaja.style.position = "absolute";
+          nuevaCaja.style.left = info.left;
+          nuevaCaja.style.bottom = info.bottom;
+          nuevaCaja.style.width = info.width;
+          nuevaCaja.style.height = info.height;
+          nuevaCaja.style.zIndex = "2";
+          nuevaCaja.classList.add("caja");
+          imgAbierta.parentElement.appendChild(nuevaCaja);
+        });
 
         const i = inventario.indexOf("llave");
         if (i !== -1) {

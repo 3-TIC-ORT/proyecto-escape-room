@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
         else if (obj === "llave") img.src = "../Elementos/llave.png";
         else if (obj === "papel") img.src = "../Elementos/papel.png";
+        else if (obj === "llaveS") img.src = "../Elementos/llave.png"; // NUEVA LLAVE DEL SARCOFAGO
 
         item.appendChild(img);
         item.setAttribute("data-nombre", obj);
@@ -324,8 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
           { left: "26vw", bottom: "15vh", width: "100px", height: "100px" },
           { left: "18vw", bottom: "13vh", width: "120px", height: "120px" },
           { left: "35vw", bottom: "12vh", width: "100px", height: "100px" },
-          { left: "23vw", bottom: "27.5vh", width: "70px", height: "70px" }
+          { left: "23vw", bottom: "27.5vh", width: "70px", height: "70px" } // ESTA ES LA CAJA CHICA
         ];
+
+        const cajas = [];
 
         cajasInfo.forEach((info, i) => {
           const nuevaCaja = document.createElement("img");
@@ -337,12 +340,47 @@ document.addEventListener('DOMContentLoaded', () => {
           nuevaCaja.style.height = info.height;
           nuevaCaja.style.zIndex = "2";
           nuevaCaja.classList.add("caja");
+          nuevaCaja.dataset.indice = i;
           imgAbierta.parentElement.appendChild(nuevaCaja);
+          cajas.push(nuevaCaja);
         });
 
+        // --- NUEVO: LLAVE DE LA CAJA CHICA ---
+        const cajaChica = cajas[3];
+        cajaChica.addEventListener("click", () => {
+          if (!inventario.includes("llaveS")) {
+            inventario.push("llaveS");
+            actualizarInventario();
+          }
+        });
+
+        // Sacar la llave usada
         const i = inventario.indexOf("llave");
         if (i !== -1) {
           inventario.splice(i, 1);
+          actualizarInventario();
+        }
+      }
+    });
+  }
+
+  // --- NUEVO: ABRIR SARCOFAGO EN PARED 4 ---
+  const sarcoAbajo = document.querySelector(".sarcofago2"); // tapa cerrada
+  const sarcoArriba = document.querySelector(".sarcofagoArriba"); // tapa abierta
+
+  if (sarcoAbajo && sarcoArriba) {
+    sarcoArriba.style.display = "none"; // empieza oculta
+
+    sarcoAbajo.addEventListener("click", () => {
+      const sel = seleccionado1 !== null ? inventario[seleccionado1] : null;
+
+      if (sel === "llaveS") {
+        sarcoAbajo.style.display = "none";
+        sarcoArriba.style.display = "block";
+
+        const idx = inventario.indexOf("llaveS");
+        if (idx !== -1) {
+          inventario.splice(idx, 1);
           actualizarInventario();
         }
       }

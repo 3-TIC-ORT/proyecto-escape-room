@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (obj === "destornillador") img.src = "../Elementos/destornillador.png";
         else if (obj === "llave") img.src = "../Elementos/llave.png";
         else if (obj === "papel") img.src = "../Elementos/papel.png";
-        else if (obj === "llaveS") img.src = "../Elementos/llave.png"; // NUEVA LLAVE DEL SARCOFAGO
+        else if (obj === "llaveS") img.src = "../Elementos/llave.png";
 
         item.appendChild(img);
         item.setAttribute("data-nombre", obj);
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPasarHabitacion = document.getElementById('pasarHabitacion');
   if (btnPasarHabitacion) {
     btnPasarHabitacion.addEventListener('click', () => {
-      window.location.href = '../Habitacióon2/Juego2.html';
+      window.location.href = '../Final/Final.html';
     });
   }
 
@@ -320,12 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
         imgAbierta.style.zIndex = "1";
         piramideIzquierda.parentElement.appendChild(imgAbierta);
 
-        // --- Crear 4 cajas distintas ---
         const cajasInfo = [
           { left: "26vw", bottom: "15vh", width: "100px", height: "100px" },
           { left: "18vw", bottom: "13vh", width: "120px", height: "120px" },
           { left: "35vw", bottom: "12vh", width: "100px", height: "100px" },
-          { left: "23vw", bottom: "27.5vh", width: "70px", height: "70px" } // ESTA ES LA CAJA CHICA
+          { left: "23vw", bottom: "27.5vh", width: "70px", height: "70px" }
         ];
 
         const cajas = [];
@@ -345,7 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
           cajas.push(nuevaCaja);
         });
 
-        // --- NUEVO: LLAVE DE LA CAJA CHICA ---
         const cajaChica = cajas[3];
         cajaChica.addEventListener("click", () => {
           if (!inventario.includes("llaveS")) {
@@ -354,7 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-        // Sacar la llave usada
         const i = inventario.indexOf("llave");
         if (i !== -1) {
           inventario.splice(i, 1);
@@ -365,11 +362,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- NUEVO: ABRIR SARCOFAGO EN PARED 4 ---
-  const sarcoAbajo = document.querySelector(".sarcofago2"); // tapa cerrada
-  const sarcoArriba = document.querySelector(".sarcofagoArriba"); // tapa abierta
+  const sarcoAbajo = document.querySelector(".sarcofago2");
+  const sarcoArriba = document.querySelector(".sarcofagoArriba");
 
   if (sarcoAbajo && sarcoArriba) {
-    sarcoArriba.style.display = "none"; // empieza oculta
+    sarcoArriba.style.display = "none";
 
     sarcoAbajo.addEventListener("click", () => {
       const sel = seleccionado1 !== null ? inventario[seleccionado1] : null;
@@ -386,6 +383,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  // --- Esfinge cerrada con llave ---
+const esfingeCerrada = document.querySelector(".esfinge.cerrada");
+if (esfingeCerrada) {
+  esfingeCerrada.addEventListener("click", () => {
+    // Verifica si la llave 2 está seleccionada
+    const seleccionadoNombre = seleccionado1 !== null ? inventario[seleccionado1] : null;
+    if (seleccionadoNombre === "llaveS") {
+      esfingeCerrada.style.display = "none";
+      
+      // Sacar la llave usada del inventario
+      const idx = inventario.indexOf("llaveS");
+      if (idx !== -1) {
+        inventario.splice(idx, 1);
+        actualizarInventario();
+      }
+    }
+  });
+}
+
 
   // --- Mostrar pared ---
   function mostrarPared(index) {
